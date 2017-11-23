@@ -1,0 +1,69 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Small.Helper">
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Small.Error">
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+    </style>
+
+    <style name="PurpleButton" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="android:layout_marginLeft">@dimen/margin_l</item>
+        <item name="android:layout_marginRight">@dimen/margin_l</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="colorButtonNormal">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorControlHighlight">@color/purple</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Small.Hint" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
+    <style name="EditText">
+        <item name="android:theme">@style/Theme.AppCompat.Light.EditText</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="EditText.SingleLine">
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Theme.AppCompat.Light.EditText">
+        <item name="colorControlNormal">@android:color/darker_gray</item>
+        <item name="colorControlActivated">@android:color/holo_blue_dark</item>
+    </style>
+
+    <style name="TextInputLayout">
+        <item name="android:layout_marginLeft">@dimen/margin_l</item>
+        <item name="android:layout_marginRight">@dimen/margin_l</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="errorTextAppearance">@style/TextAppearance.AppCompat.Small.Error</item>
+        <item name="hintTextAppearance">@style/TextAppearance.AppCompat.Small.Hint</item>
+    </style>
+
+    <style name="TextInputLayout.Counter">
+        <item name="counterOverflowTextAppearance">@style/TextAppearance.AppCompat.Small.Counter</item>
+        <item name="counterEnabled">true</item>
+        <item name="counterMaxLength">10</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.Small.Counter">
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+    </style>
+
+
+</resources>

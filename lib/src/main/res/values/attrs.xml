@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RxValidationTextInputLayout">
+        <attr name="helperTextAppearance" format="reference" />
+        <attr name="errorTextAppearance" format="reference" />
+        <attr name="equalEditText" format="reference" />
+        <attr name="error" format="string" />
+        <attr name="help" format="string" />
+        <attr name="regex" format="string" />
+        <attr name="allowEmpty" format="boolean" />
+        <attr name="showErrorIfEmpty" format="boolean" />
+        <attr name="acceptableText" format="string" />
+
+    </declare-styleable>
+
+</resources>
