@@ -35,13 +35,19 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
 
     var showErrorIfEmpty: Boolean = false
 
-    var focusDisposable: Disposable? = null
+    private var focusDisposable: Disposable? = null
 
     var onReady: ((Observable<Boolean>) -> Unit)? = null
 
     var observable: Observable<Boolean>? = null
+        private set(value) {
+            field = value
+        }
 
     var isReady: Boolean? = null
+        private set(value) {
+            field = value
+        }
 
     companion object {
 
