@@ -120,6 +120,12 @@ And get simple boolean result using RxJava2 in Java code:
 <p align="center">
                <img src="https://preview.ibb.co/ftW4TR/Unknown.png"/>
              </p>
+             
+## Changelog
+
+### Version: 0.1.2
+
+* Added the methods to trigger error text immediately              
                     
 ## Licenses
 

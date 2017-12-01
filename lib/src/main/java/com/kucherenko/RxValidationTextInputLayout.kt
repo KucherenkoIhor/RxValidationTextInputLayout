@@ -1,6 +1,7 @@
 package com.kucherenko
 
 import android.content.Context
+import android.support.annotation.StringRes
 import android.support.design.widget.TextInputLayout
 import android.util.AttributeSet
 import android.widget.EditText
@@ -91,6 +92,29 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
         }
     }
 
+    /**
+     * @see triggerError
+     *
+     * @param errorText - id of string resources that will be shown as error text
+     */
+    fun triggerError(@StringRes errorText: Int) {
+        triggerError(resources.getString(errorText))
+    }
+
+    /**
+     * This method shows error text immediately
+     * @param text - string that will be shown as error text
+     *
+     * It is useful for case when some out logic can decide validation rules for inputted text
+     */
+    fun triggerError(text: String) {
+        editText?.isFocusableInTouchMode = true
+        editText?.requestFocus()
+        isErrorEnabled = true
+        error = text
+        this.setErrorTextAppearance(errorResId)
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         isReady = null
@@ -117,9 +141,18 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
                     .doOnNext {
                         this.error = when {
                             it -> ""
-                            hasFocus() && helperText.isNullOrBlank().not()-> helperText
-                            hasFocus() && helperText.isNullOrBlank()-> errorText
-                            else -> errorText
+                            hasFocus() && helperText.isNullOrBlank().not() -> {
+                                this.setErrorTextAppearance(helperResId)
+                                helperText
+                            }
+                            hasFocus() && helperText.isNullOrBlank()-> {
+                                this.setErrorTextAppearance(errorResId)
+                                errorText
+                            }
+                            else -> {
+                                this.setErrorTextAppearance(errorResId)
+                                errorText
+                            }
                         }
                     }
                     .map {

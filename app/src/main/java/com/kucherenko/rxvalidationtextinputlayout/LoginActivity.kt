@@ -31,8 +31,12 @@ class LoginActivity : AppCompatActivity() {
         RxValidationTextInputLayout.combineOnReady(*textInputLayouts) { observable ->
             disposable = observable.subscribe { btnSignIn.isEnabled = it }
         }
-    }
 
+        btnTriggerError.setOnClickListener {
+            tilFirstName.triggerError("Error")
+        }
+
+    }
 
     override fun onDestroy() {
         disposable?.dispose()
