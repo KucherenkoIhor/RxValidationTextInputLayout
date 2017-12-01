@@ -21,7 +21,7 @@ allprojects {
 
 ```
 dependencies {
-		implementation 'com.github.KucherenkoIhor:RxValidationTextInputLayout:0.1'
+		implementation 'com.github.KucherenkoIhor:RxValidationTextInputLayout:0.1.2'
 }
 ```
 
