@@ -39,16 +39,20 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
     private var focusDisposable: Disposable? = null
 
     var onReady: ((Observable<Boolean>) -> Unit)? = null
+         set(value) {
+             field = value
+             observable?.let { field?.invoke(it) }
+         }
 
     var observable: Observable<Boolean>? = null
         private set(value) {
             field = value
         }
 
-    var isReady: Boolean? = null
-        private set(value) {
-            field = value
-        }
+    val isReady: Boolean
+            get() {
+                return observable != null
+            }
 
     companion object {
 
@@ -117,7 +121,6 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        isReady = null
         subscribeValidation()
     }
 

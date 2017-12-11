@@ -21,7 +21,7 @@ allprojects {
 
 ```
 dependencies {
-		implementation 'com.github.KucherenkoIhor:RxValidationTextInputLayout:0.1'
+		implementation 'com.github.KucherenkoIhor:RxValidationTextInputLayout:0.1.3'
 }
 ```
 
@@ -122,6 +122,10 @@ And get simple boolean result using RxJava2 in Java code:
              </p>
              
 ## Changelog
+
+### Version: 0.1.3
+
+* Fixed onReadyCallback and isReady field  
 
 ### Version: 0.1.2
 
