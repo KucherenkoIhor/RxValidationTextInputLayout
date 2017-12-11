@@ -123,10 +123,6 @@ And get simple boolean result using RxJava2 in Java code:
              
 ## Changelog
 
-### Version: 0.1.3
-
-* Fixed onReadyCallback and isReady field  
-
 ### Version: 0.1.2
 
 * Added the methods to trigger error text immediately              
