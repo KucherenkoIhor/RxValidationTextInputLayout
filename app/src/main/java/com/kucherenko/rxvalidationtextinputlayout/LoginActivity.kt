@@ -3,8 +3,10 @@ package com.kucherenko.rxvalidationtextinputlayout
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.kucherenko.RxValidationTextInputLayout
+import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_login.*
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by ihor_kucherenko on 11/22/17.
@@ -29,7 +31,9 @@ class LoginActivity : AppCompatActivity() {
                 tilConfirmPassword)
 
         RxValidationTextInputLayout.combineOnReady(*textInputLayouts) { observable ->
-            disposable = observable.subscribe { btnSignIn.isEnabled = it }
+            disposable = observable
+                    .debounce { Observable.timer(if (it) 500L else 0L, TimeUnit.MILLISECONDS) }
+                    .subscribe { btnSignIn.isEnabled = it }
         }
 
         btnTriggerError.setOnClickListener {

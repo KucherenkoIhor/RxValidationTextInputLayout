@@ -82,7 +82,9 @@ And get simple boolean result using RxJava2 in Java code:
                  tilConfirmPassword)
  
          RxValidationTextInputLayout.combineOnReady(*textInputLayouts) { observable ->
-             disposable = observable.subscribe { btnSignIn.isEnabled = it }
+             disposable = observable
+                    .debounce { Observable.timer(if (it) 500L else 0L, TimeUnit.MILLISECONDS) }
+                    .subscribe { btnSignIn.isEnabled = it }
          }
 
 ```
