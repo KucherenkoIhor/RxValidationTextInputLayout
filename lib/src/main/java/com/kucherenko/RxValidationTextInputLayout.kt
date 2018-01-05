@@ -135,7 +135,7 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
                     .map {
                         (acceptableText?.let {
                             it == et.text.toString()
-                        } ?: it.editable().isNullOrBlank() && showErrorIfEmpty.not())
+                        } ?: it.editable().isNullOrEmpty() && showErrorIfEmpty.not())
                                 ||
                                 equalEditText?.let {
                                     et.text.toString() == it.text.toString()
@@ -144,11 +144,11 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
                     .doOnNext {
                         this.error = when {
                             it -> ""
-                            hasFocus() && helperText.isNullOrBlank().not() -> {
+                            hasFocus() && helperText.isNullOrEmpty().not() -> {
                                 this.setErrorTextAppearance(helperResId)
                                 helperText
                             }
-                            hasFocus() && helperText.isNullOrBlank()-> {
+                            hasFocus() && helperText.isNullOrEmpty()-> {
                                 this.setErrorTextAppearance(errorResId)
                                 errorText
                             }
@@ -159,12 +159,12 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
                         }
                     }
                     .map {
-                        if (allowEmpty && et.text.isNullOrBlank()) {
+                        if (allowEmpty && et.text.isNullOrEmpty()) {
                             true
                         } else {
                             (acceptableText?.let {
                                 et.text.toString() != it
-                            } ?: et.text.isNullOrBlank().not()) && it
+                            } ?: et.text.isNullOrEmpty().not()) && it
                         }
                     }
                     .doOnSubscribe {
@@ -173,13 +173,13 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
                                 .subscribe { isFocused ->
                                     if (isFocused) {
                                         this.setErrorTextAppearance(helperResId)
-                                        if (this.error.isNullOrBlank().not()
+                                        if (this.error.isNullOrEmpty().not()
                                                 && this.error == errorText) {
                                             this.error = helperText
                                         }
                                     } else {
                                         this.setErrorTextAppearance(errorResId)
-                                        if (this.error.isNullOrBlank().not()
+                                        if (this.error.isNullOrEmpty().not()
                                                 && this.error == helperText?.let { it } ?: errorText) {
                                             this.error = errorText
                                         }
