@@ -55,6 +55,8 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
                 return observable != null
             }
 
+    var isValid = false
+
     companion object {
 
         fun combineOnReady(vararg layouts: RxValidationTextInputLayout, onReady: (Observable<Boolean>) -> Unit) {
@@ -142,18 +144,6 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
                                     et.text.toString() == it.text.toString()
                                 } ?: et.text.matches(Regex(regex ?: return@map true))
 
-
-//                        if (equalEditText != null) {
-//                            Log.e("TAG", " " + (et !== equalEditText))
-//                            Log.e("TAG", "  " + isValid)
-//                            Log.e("TAG", "   " + (equalEditText.text.toString() == et.text.toString()))
-//                            if (et !== equalEditText && isValid && equalEditText.text.toString() == et.text.toString()) {
-//                               Log.e("TAG", equalEditText.parent::class.java.simpleName)
-//                               Log.e("TAG", equalEditText.parent.parent::class.java.simpleName)
-//                               Log.e("TAG", equalEditText.parent.parent::class.java.simpleName)
-//                            }
-//                        }
-
                         isValid
                     }
                     .doOnNext {
@@ -182,6 +172,7 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
                             } ?: et.text.isNullOrEmpty().not()) && it
                         }
                     }
+                    .doOnNext { isValid = it }
                     .doOnSubscribe {
                         focusDisposable = RxView.focusChanges(et)
                                 .skipInitialValue()
@@ -208,13 +199,15 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
                                             layout?.observable
                                                     ?.doOnSubscribe { equalEditTextDisposable = it }
                                                     ?.subscribe {
-                                                        if (it && equalEditText.text.toString() == editText?.text?.toString()) {
+                                                        if (layout.isValid == true && equalEditText.text.toString() == editText?.text?.toString()) {
                                                             this.error = ""
+                                                            this.editText?.setText(editText?.text?.toString() + "")
                                                         } else {
                                                             this.setErrorTextAppearance(errorResId)
                                                             this.error = errorText
                                                         }
                                                     }
+
                                         }
 
 
