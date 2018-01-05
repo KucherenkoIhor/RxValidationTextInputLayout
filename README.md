@@ -21,7 +21,7 @@ allprojects {
 
 ```
 dependencies {
-		implementation 'com.github.KucherenkoIhor:RxValidationTextInputLayout:0.1.5'
+		implementation 'com.github.KucherenkoIhor:RxValidationTextInputLayout:0.2.1'
 }
 ```
 
@@ -124,6 +124,10 @@ And get simple boolean result using RxJava2 in Java code:
              </p>
              
 ## Changelog
+
+### Version: 0.2.1
+
+* Improved equal edit text functionality
 
 ### Version: 0.1.3
 
