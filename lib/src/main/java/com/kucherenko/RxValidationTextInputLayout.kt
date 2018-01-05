@@ -37,6 +37,7 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
     var showErrorIfEmpty: Boolean = false
 
     private var focusDisposable: Disposable? = null
+    private var equalEditTextDisposable: Disposable? = null
 
     var onReady: ((Observable<Boolean>) -> Unit)? = null
          set(value) {
@@ -133,13 +134,27 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
             observable = RxTextView.afterTextChangeEvents(et)
                     .skip(if (allowEmpty) 0 else 1)
                     .map {
-                        (acceptableText?.let {
+                        val isValid = (acceptableText?.let {
                             it == et.text.toString()
                         } ?: it.editable().isNullOrEmpty() && showErrorIfEmpty.not())
                                 ||
                                 equalEditText?.let {
                                     et.text.toString() == it.text.toString()
                                 } ?: et.text.matches(Regex(regex ?: return@map true))
+
+
+//                        if (equalEditText != null) {
+//                            Log.e("TAG", " " + (et !== equalEditText))
+//                            Log.e("TAG", "  " + isValid)
+//                            Log.e("TAG", "   " + (equalEditText.text.toString() == et.text.toString()))
+//                            if (et !== equalEditText && isValid && equalEditText.text.toString() == et.text.toString()) {
+//                               Log.e("TAG", equalEditText.parent::class.java.simpleName)
+//                               Log.e("TAG", equalEditText.parent.parent::class.java.simpleName)
+//                               Log.e("TAG", equalEditText.parent.parent::class.java.simpleName)
+//                            }
+//                        }
+
+                        isValid
                     }
                     .doOnNext {
                         this.error = when {
@@ -177,12 +192,32 @@ class RxValidationTextInputLayout @JvmOverloads constructor(
                                                 && this.error == errorText) {
                                             this.error = helperText
                                         }
+
+                                        equalEditTextDisposable?.dispose()
+
                                     } else {
                                         this.setErrorTextAppearance(errorResId)
                                         if (this.error.isNullOrEmpty().not()
                                                 && this.error == helperText?.let { it } ?: errorText) {
                                             this.error = errorText
                                         }
+
+                                        if (equalEditText != null) {
+                                            val layout = equalEditText.parent.parent as? RxValidationTextInputLayout
+
+                                            layout?.observable
+                                                    ?.doOnSubscribe { equalEditTextDisposable = it }
+                                                    ?.subscribe {
+                                                        if (it && equalEditText.text.toString() == editText?.text?.toString()) {
+                                                            this.error = ""
+                                                        } else {
+                                                            this.setErrorTextAppearance(errorResId)
+                                                            this.error = errorText
+                                                        }
+                                                    }
+                                        }
+
+
                                     }
                                 }
                     }
